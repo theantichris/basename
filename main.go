@@ -6,23 +6,17 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func basename(s string) string {
 	// Discard last '/' and everything before.
-	for i := len(s) - 1; i >= 0; i-- {
-		if s[i] == '/' {
-			s = s[i+1:]
-			break
-		}
-	}
+	slash := strings.LastIndex(s, "/")
+	s = s[slash+1:]
 
 	// Preserve everything before the last '.'.
-	for i := len(s) - 1; i >= 0; i-- {
-		if s[i] == '.' {
-			s = s[:i]
-			break
-		}
+	if dot := strings.LastIndex(s, "."); dot >= 0 {
+		s = s[:dot]
 	}
 
 	return s
